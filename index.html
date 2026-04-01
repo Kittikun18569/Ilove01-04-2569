@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April With You 💗</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Kanit',sans-serif;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffd6e0,#fff,#ffe4ec);
+}
+
+/* glow */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle at 30% 30%, rgba(255,105,135,0.3), transparent);
+}
+
+/* START SCREEN */
+#startScreen{
+    position:fixed;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:#ff4d6d;
+    z-index:10;
+}
+
+/* glass card */
+.start-card{
+    background:rgba(255,255,255,0.5);
+    backdrop-filter:blur(20px);
+    padding:50px;
+    border-radius:30px;
+    box-shadow:0 10px 50px rgba(255,105,135,0.4);
+    text-align:center;
+}
+
+/* title */
+.start-card h2{
+    font-family:'Great Vibes',cursive;
+    font-size:2.5rem;
+}
+
+/* button */
+.start-btn{
+    margin-top:25px;
+    padding:15px 40px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(45deg,#ff4d6d,#ff85a2);
+    color:white;
+    font-size:1.1rem;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.start-btn:hover{
+    transform:scale(1.08);
+    box-shadow:0 5px 25px rgba(255,105,135,0.5);
+}
+
+/* loading */
+.loading{
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    background:rgba(255,255,255,0.6);
+    backdrop-filter:blur(20px);
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 40px rgba(255,105,135,0.3);
+    text-align:center;
+    color:#ff4d6d;
+}
+
+.progress-box{
+    margin-top:20px;
+    width:250px;
+    height:14px;
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#ff85a2,#ffc0cb);
+}
+
+/* MAIN */
+.main{
+    display:none;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    color:#ff4d6d;
+}
+
+/* title */
+.title{
+    font-family:'Great Vibes',cursive;
+    font-size:4rem;
+    text-shadow:0 0 15px rgba(255,105,135,0.5);
+}
+
+/* text */
+.text{
+    margin-top:20px;
+    font-size:1.2rem;
+    max-width:350px;
+    line-height:1.6;
+}
+
+/* floating */
+.float{
+    position:absolute;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh);}
+    100%{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div id="startScreen">
+    <div class="start-card">
+        <h2>For You 💗</h2>
+        <p>มีบางอย่างอยากให้เธอ...</p>
+        <button class="start-btn" onclick="startApp()">กดตรงนี้ 💗</button>
+    </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+    <div class="card">
+        <h2>Entering April 💗</h2>
+        <div class="progress-box">
+            <div class="progress" id="progress"></div>
+        </div>
+        <p id="percent">0%</p>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main">
+    <div class="title">1 เมษายน 💗</div>
+    <h2>Hello April</h2>
+    <div class="text" id="text"></div>
+</div>
+
+<audio id="music" loop>
+    <source src="LANDOKMAI เพลงรักเพลงแรก Blooming Official Lyrics.mp3">
+</audio>
+
+<script>
+const music = document.getElementById("music");
+
+function startApp(){
+    document.getElementById("startScreen").style.display="none";
+    document.getElementById("loading").style.display="flex";
+
+    music.volume=0;
+    music.play();
+
+    let v=0;
+    const fade=setInterval(()=>{
+        if(v<1){
+            v+=0.03;
+            music.volume=v;
+        }else clearInterval(fade);
+    },150);
+
+    startLoading();
+}
+
+function startLoading(){
+    let progress=0;
+    const bar=document.getElementById("progress");
+    const percent=document.getElementById("percent");
+
+    const load=setInterval(()=>{
+        progress+=100/120;
+
+        if(progress>=100){
+            progress=100;
+            clearInterval(load);
+
+            document.getElementById("loading").style.display="none";
+            document.getElementById("main").style.display="flex";
+
+            typing();
+        }
+
+        bar.style.width=progress+"%";
+        percent.innerText=Math.floor(progress)+"%";
+
+    },100);
+}
+
+const msg = "ขึ้นเดือนใหม่แล้วนะ 💗 เดือนเมษายนแล้ววว ขอให้เดือนนี้เป็นเดือนที่ดีของเธอมาก ๆ เลยนะ ขอให้ทุกวันของเธอเต็มไปด้วยรอยยิ้ม มีแต่เรื่องดี ๆ เข้ามาในชีวิต เหนื่อยน้อยลงนิดนึง ยิ้มเยอะขึ้นอีกหน่อย แล้วก็มีความสุขมากขึ้นในทุก ๆ วันเลยนะ 🤍เค้าขอให้เธอได้กินของอร่อย ๆ ได้ไปในที่ที่อยากไป ได้ทำสิ่งที่ชอบ และมีคนอยู่ข้าง ๆ ที่คอยซัพพอร์ตเธอเสมอ ไม่ว่าเธอจะเจออะไร เค้าก็อยากให้รู้ไว้นะว่าเธอเก่งมากแล้ว และเธอทำได้ดีมาก ๆ เลยจริง ๆ 💗แล้วก็...เค้าอยากเป็นหนึ่งในความสุขเล็ก ๆ ของเธอในทุกวันเลยนะ อยากอยู่ข้าง ๆ เธอในทุกช่วงเวลา ไม่ว่าจะเป็นวันที่ดีมาก ๆ หรือวันที่เหนื่อย ๆ เค้าก็ยังอยากอยู่ตรงนี้กับเธอเสมอ 🤍ขอให้เดือนนี้มีแต่ความน่ารัก ความอบอุ่น และความสบายใจนะ ขอให้ทุกอย่างค่อย ๆ ดีขึ้นเรื่อย ๆ แล้วก็...ขอให้มีเค้าอยู่ในทุกวันของเธอเลยนะ 💗✨";
+let i=0;
+
+function typing(){
+    if(i<msg.length){
+        document.getElementById("text").innerHTML+=msg.charAt(i);
+        i++;
+        setTimeout(typing,40);
+    }
+}
+
+function floatItem(){
+    const el=document.createElement("div");
+    el.className="float";
+    el.innerHTML=Math.random()>0.5?"💗":"✨";
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),6000);
+}
+setInterval(floatItem,300);
+</script>
+
+</body>
+</html>
